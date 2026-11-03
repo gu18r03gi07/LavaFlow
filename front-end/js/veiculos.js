@@ -1,8 +1,4 @@
-// dados falsos; no passo 18 virão da API
-let veiculos = [
-  { marca: "Volkswagen", modelo: "T-Cross", placa: "ABC-1D23", cor: "Cinza Platinum" },
-  { marca: "Honda", modelo: "Civic", placa: "EKO-7F89", cor: "Branco" },
-];
+let veiculos = [];
 
 const lista = document.getElementById("lista-veiculos");
 const modal = document.getElementById("modal-veiculo");
@@ -48,16 +44,30 @@ function abrirModal() {
 document.getElementById("btn-novo-veiculo").addEventListener("click", abrirModal);
 document.getElementById("btn-fechar-veiculo").addEventListener("click", () => modal.close());
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  veiculos.push({
-    marca: document.getElementById("marca").value.trim(),
-    modelo: document.getElementById("modelo").value.trim(),
-    placa: document.getElementById("placa").value.trim().toUpperCase(),
-    cor: document.getElementById("cor").value.trim(),
-  });
-  modal.close();
-  desenhar();
+  try {
+    const novo = await criarVeiculo({
+      marca: document.getElementById("marca").value.trim(),
+      modelo: document.getElementById("modelo").value.trim(),
+      placa: document.getElementById("placa").value.trim().toUpperCase(),
+      cor: document.getElementById("cor").value.trim(),
+    });
+    veiculos.push(novo);
+    modal.close();
+    desenhar();
+  } catch (erro) {
+    alert(erro.message);
+  }
 });
 
-desenhar();
+async function iniciar() {
+  try {
+    veiculos = await buscarVeiculos();
+  } catch (erro) {
+    lista.textContent = "Não foi possível carregar os veículos. A API está ligada?";
+    return;
+  }
+  desenhar();
+}
+iniciar();
