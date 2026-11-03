@@ -1,14 +1,6 @@
-// dados falsos; no passo 17 virão da API
-const servicos = [
-  { id: 1, nome: "Lavagem Essencial", descricao: "Lavagem externa, rodas, pneus e secagem manual.", preco: 45, duracaoMin: 60 },
-  { id: 2, nome: "Lavagem Completa", descricao: "Limpeza externa e interna, aspiração e acabamento.", preco: 79.9, duracaoMin: 90 },
-  { id: 3, nome: "Detalhamento Premium", descricao: "Higienização profunda, cera protetora e revitalização.", preco: 149.9, duracaoMin: 180 },
-];
-const veiculos = ["Volkswagen T-Cross • ABC-1D23", "Honda Civic • EKO-7F89"];
-
-// se veio do Início (agendar.html?servico=3), já deixa esse selecionado
-const idDaUrl = Number(new URLSearchParams(location.search).get("servico"));
-let servico = servicos.find((s) => s.id === idDaUrl) || servicos[1];
+let servicos = [];
+let servico = null;
+const veiculos = ["Volkswagen T-Cross • ABC-1D23", "Honda Civic • EKO-7F89"]; // vira API no passo 18
 let etapa = 1;
 
 // ---------- disponibilidade (dados falsos; no Java isso vem do banco) ----------
@@ -177,7 +169,20 @@ document.getElementById("btn-voltar").addEventListener("click", () => {
   }));
 
 // ---------- inicialização ----------
-document.getElementById("veiculo").innerHTML = veiculos.map((v) => `<option>${v}</option>`).join("");
-document.getElementById("data").min = new Date().toLocaleDateString("sv-SE");
-desenharServicos();
-atualizarResumo();
+async function iniciar() {
+  document.getElementById("veiculo").innerHTML = veiculos.map((v) => `<option>${v}</option>`).join("");
+  document.getElementById("data").min = new Date().toLocaleDateString("sv-SE");
+
+  try {
+    servicos = await buscarServicos();
+    // se veio do Início ou da landing (agendar.html?servico=3), já deixa esse selecionado
+    const idDaUrl = Number(new URLSearchParams(location.search).get("servico"));
+    servico = servicos.find((s) => s.id === idDaUrl) || servicos[1] || servicos[0];
+    desenharServicos();
+    atualizarResumo();
+  } catch (erro) {
+    document.getElementById("lista-servicos").textContent =
+      "Não foi possível carregar os serviços. A API está ligada?";
+  }
+}
+iniciar();
