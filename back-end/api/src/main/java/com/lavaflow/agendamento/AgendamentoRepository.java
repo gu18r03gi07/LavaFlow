@@ -11,4 +11,8 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
             LocalDateTime de, LocalDateTime ate, String status);
 
     List<Agendamento> findByUsuarioIdOrderByInicioDesc(Long usuarioId);
+
+        // todos os agendamentos de um período (inclusive cancelados), em ordem de hora
+    List<Agendamento> findByInicioGreaterThanEqualAndInicioLessThanOrderByInicio(
+            LocalDateTime de, LocalDateTime ate);
 }

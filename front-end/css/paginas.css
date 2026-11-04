@@ -222,3 +222,11 @@ a.cartao-servico:hover { border-color: var(--azul); transform: translateY(-2px);
 .sugestao span { font-size: 12px; color: var(--texto-suave); }
 .sugestao:hover { border-color: var(--azul); background: var(--azul-claro); }
 .resumo-quando { margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--azul); }
+
+/* ========== ADMIN: barra de data ========== */
+.barra-data { display: flex; align-items: center; gap: 8px; }
+.barra-data input {
+  padding: 8px 12px; background: var(--branco);
+  border: 1px solid var(--borda); border-radius: var(--raio-pequeno);
+}
+.vazio { padding: 24px 16px; color: var(--texto-suave); font-size: 14px; }

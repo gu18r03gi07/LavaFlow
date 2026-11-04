@@ -16,23 +16,24 @@
     <header class="cabecalho-pagina">
       <div>
         <h1>Veículos agendados</h1>
-        <p class="texto-suave">Lista consolidada de veículos e clientes esperados hoje.</p>
+        <p class="texto-suave">Lista consolidada de veículos e clientes esperados no dia.</p>
+      </div>
+      <div class="barra-data">
+        <input type="date" id="dia">
       </div>
     </header>
 
     <div class="cartao sem-padding">
       <table class="tabela">
         <thead><tr><th>Horário</th><th>Veículo</th><th>Serviço</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr><td><strong>14:00</strong><small>até 15:30</small></td><td><strong>Volkswagen T-Cross</strong><small>ABC-1D23 • Marina Alves</small></td><td>Lavagem Completa</td><td><span class="etiqueta">Agendado</span></td></tr>
-          <tr><td><strong>10:30</strong><small>até 11:30</small></td><td><strong>Chevrolet Onix</strong><small>GHI-4J56 • João Martins</small></td><td>Lavagem Essencial</td><td><span class="etiqueta etiqueta-roxa">Em lavagem</span></td></tr>
-          <tr><td><strong>08:00</strong><small>até 11:00</small></td><td><strong>Jeep Renegade</strong><small>KLM-9N01 • Carla Souza</small></td><td>Detalhamento Premium</td><td><span class="etiqueta etiqueta-verde">Concluído</span></td></tr>
-          <tr><td><strong>13:30</strong><small>até 15:00</small></td><td><strong>Hyundai HB20</strong><small>PQR-2S34 • Pedro Lima</small></td><td>Lavagem Completa</td><td><span class="etiqueta etiqueta-amarela">Recebido</span></td></tr>
-        </tbody>
+        <tbody id="tabela"></tbody>
       </table>
     </div>
   </main>
 
   <script src="../js/sidebar.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/veiculos-agendados.js"></script>
 </body>
 </html>

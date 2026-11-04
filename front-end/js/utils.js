@@ -33,3 +33,19 @@ function dataCurta(iso) {
 function dataExtenso(d = new Date()) {
   return d.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" });
 }
+
+// protege textos vindos do banco antes de usar dentro de innerHTML
+function esc(texto) {
+  const d = document.createElement("div");
+  d.textContent = texto;
+  return d.innerHTML;
+}
+
+// o banco guarda o código; aqui está o texto e a cor de cada status
+const statusInfo = {
+  AGENDADO: ["Agendado", "etiqueta"],
+  RECEBIDO: ["Recebido", "etiqueta etiqueta-amarela"],
+  EM_LAVAGEM: ["Em lavagem", "etiqueta etiqueta-roxa"],
+  CONCLUIDO: ["Concluído", "etiqueta etiqueta-verde"],
+  CANCELADO: ["Cancelado", "etiqueta etiqueta-vermelha"],
+};

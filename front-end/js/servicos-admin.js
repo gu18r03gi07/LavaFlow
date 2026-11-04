@@ -1,11 +1,5 @@
-// dados falsos; no passo 20 virão da API
-let servicos = [
-  { id: 1, nome: "Lavagem Essencial", descricao: "Lavagem externa, rodas, pneus e secagem manual.", preco: 45, duracaoMin: 60, ativo: true },
-  { id: 2, nome: "Lavagem Completa", descricao: "Limpeza externa e interna, aspiração e acabamento.", preco: 79.9, duracaoMin: 90, ativo: true },
-  { id: 3, nome: "Detalhamento Premium", descricao: "Higienização profunda, cera protetora e revitalização.", preco: 149.9, duracaoMin: 180, ativo: true },
-];
-let proximoId = 4;
-let editandoId = null; // null = criando um novo; número = editando aquele serviço
+let servicos = [];
+let editandoId = null; // null = criando; número = editando aquele serviço
 
 const lista = document.getElementById("lista-servicos-admin");
 const modal = document.getElementById("modal-servico");
@@ -28,7 +22,6 @@ function desenhar() {
         <button class="botao botao-claro btn-editar">Editar</button>
       </div>`;
 
-    // textContent para o que o usuário digitou (evita injetar HTML)
     linha.querySelector("h2").textContent = s.nome;
     linha.querySelector("p").textContent = s.descricao;
     linha.querySelector(".s-preco").textContent = dinheiro(s.preco);
@@ -36,8 +29,13 @@ function desenhar() {
 
     const chave = linha.querySelector("input[type=checkbox]");
     chave.checked = s.ativo;
-    chave.addEventListener("change", () => {
-      s.ativo = chave.checked;
+    chave.addEventListener("change", async () => {
+      try {
+        const atualizado = await ligarServico(s.id, chave.checked);
+        Object.assign(s, atualizado);
+      } catch (e) {
+        alert(e.message);
+      }
       desenhar();
     });
 
@@ -65,7 +63,7 @@ function abrirModal(servico) {
 document.getElementById("btn-novo-servico").addEventListener("click", () => abrirModal(null));
 document.getElementById("btn-fechar-servico").addEventListener("click", () => modal.close());
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const dados = {
     nome: document.getElementById("s-nome").value.trim(),
@@ -74,14 +72,24 @@ form.addEventListener("submit", (e) => {
     duracaoMin: Number(document.getElementById("s-duracao").value),
   };
 
-  if (editandoId === null) {
-    servicos.push({ id: proximoId++, ativo: true, ...dados });
-  } else {
-    Object.assign(servicos.find((s) => s.id === editandoId), dados);
+  try {
+    const salvo = await salvarServico(dados, editandoId);
+    if (editandoId === null) servicos.push(salvo);
+    else Object.assign(servicos.find((s) => s.id === editandoId), salvo);
+    modal.close();
+    desenhar();
+  } catch (erro) {
+    alert(erro.message);
   }
-
-  modal.close();
-  desenhar();
 });
 
-desenhar();
+async function iniciar() {
+  try {
+    servicos = await buscarTodosServicos();
+  } catch (e) {
+    lista.textContent = "Não foi possível carregar os serviços. A API está ligada?";
+    return;
+  }
+  desenhar();
+}
+iniciar();
