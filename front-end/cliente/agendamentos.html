@@ -27,37 +27,7 @@
       <button class="filtro" data-filtro="cancelado">Cancelados</button>
     </div>
 
-    <article class="cartao agendamento" data-status="proximo" data-duracao="90">
-  <div class="agendamento-topo">
-    <div>
-      <h3>Lavagem Completa <span class="etiqueta" data-etiqueta>Agendado</span></h3>
-      <p class="texto-suave">Volkswagen T-Cross • ABC-1D23</p>
-      <p class="texto-suave">Agendamento #LF-1048</p>
-    </div>
-    <strong class="agendamento-preco">R$ 79,90</strong>
-  </div>
-  <div class="agendamento-base">
-    <div><small>Data</small><strong data-campo="data">16 mai, 2025</strong></div>
-    <div><small>Entrada</small><strong data-campo="entrada">14:00</strong></div>
-    <div><small>Conclusão</small><strong data-campo="conclusao">15:30</strong></div>
-    <div><small>Duração</small><strong>90 min</strong></div>
-    <div class="agendamento-botoes">
-      <button class="botao botao-claro btn-reagendar">Reagendar</button>
-      <button class="botao botao-perigo btn-cancelar">Cancelar</button>
-    </div>
-  </div>
-    </article>
-
-    <article class="cartao agendamento" data-status="concluido">
-      <div class="agendamento-topo">
-        <div>
-          <h3>Lavagem Essencial <span class="etiqueta etiqueta-verde">Concluído</span></h3>
-          <p class="texto-suave">Honda Civic • EKO-7F89</p>
-          <p class="texto-suave">28 de abril • 09:00 — 10:00</p>
-        </div>
-        <strong class="agendamento-preco">R$ 45,00</strong>
-      </div>
-    </article>
+    <div id="lista-agendamentos"></div>
   </main>
 
   <dialog class="modal" id="modal-reagendar">
@@ -74,7 +44,7 @@
 
 <script src="../js/sidebar.js"></script>
 <script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
 <script src="../js/agendamentos.js"></script>
-
 </body>
 </html>

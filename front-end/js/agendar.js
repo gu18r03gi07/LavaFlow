@@ -1,63 +1,24 @@
 let servicos = [];
 let servico = null;
-const veiculos = ["Volkswagen T-Cross • ABC-1D23", "Honda Civic • EKO-7F89"]; // vira API no passo 18
 let etapa = 1;
 
-// ---------- disponibilidade (dados falsos; no Java isso vem do banco) ----------
-const ABRE = paraMinutos("08:00");
-const FECHA = paraMinutos("18:00");
-const PASSO = 30;
-const NUM_BOXES = 3;
-
-const ocupados = [
-  { box: 1, inicio: paraMinutos("09:00"), fim: paraMinutos("10:00") },
-  { box: 1, inicio: paraMinutos("13:00"), fim: paraMinutos("16:00") },
-  { box: 2, inicio: paraMinutos("13:30"), fim: paraMinutos("15:30") },
-  { box: 3, inicio: paraMinutos("12:00"), fim: paraMinutos("16:30") },
-];
-
-function boxLivre(inicio, duracao) {
-  const fim = inicio + duracao;
-  if (inicio < ABRE || fim > FECHA) return null;
-
-  for (let box = 1; box <= NUM_BOXES; box++) {
-    const temConflito = ocupados.some(
-      (o) => o.box === box && inicio < o.fim && fim > o.inicio
-    );
-    if (!temConflito) return box;
-  }
-  return null;
-}
-
-function sugerirHorarios(pedido, duracao, quantidade = 3) {
-  const livres = [];
-  for (let t = ABRE; t + duracao <= FECHA; t += PASSO) {
-    if (t !== pedido && boxLivre(t, duracao) !== null) livres.push(t);
-  }
-  return livres
-    .sort((a, b) => Math.abs(a - pedido) - Math.abs(b - pedido))
-    .slice(0, quantidade)
-    .sort((a, b) => a - b);
-}
-
-function mostrarSugestoes(pedido) {
+function mostrarSugestoes(horas) {
   const data = document.getElementById("data").value;
   const caixa = document.getElementById("sugestoes");
   const lista = document.getElementById("lista-sugestoes");
-  const sugestoes = sugerirHorarios(pedido, servico.duracaoMin);
 
   lista.innerHTML = "";
-  if (sugestoes.length === 0) {
+  if (horas.length === 0) {
     lista.textContent = "Não há horários livres nesse dia. Tente outra data.";
   }
-  sugestoes.forEach((t) => {
+  horas.forEach((h) => {
     const botao = document.createElement("button");
     botao.type = "button";
     botao.className = "sugestao";
-    botao.innerHTML = `<strong>${paraHora(t)}</strong>
-      <span>${dataCurta(data)} • pronto às ${paraHora(t + servico.duracaoMin)}</span>`;
+    botao.innerHTML = `<strong>${h}</strong>
+      <span>${dataCurta(data)} • pronto às ${somarMinutos(h, servico.duracaoMin)}</span>`;
     botao.addEventListener("click", () => {
-      document.getElementById("hora").value = paraHora(t);
+      document.getElementById("hora").value = h;
       caixa.classList.add("escondido");
       atualizarResumo();
     });
@@ -114,7 +75,9 @@ function mostrarEtapa(n) {
 function preencherConfirmacao() {
   const data = document.getElementById("data").value;
   const hora = document.getElementById("hora").value;
-  const veiculo = document.getElementById("veiculo").value;
+  // o value do select é o id; o nome do veículo está no texto da opção
+  const select = document.getElementById("veiculo");
+  const veiculo = select.options[select.selectedIndex].text;
   const dataBr = data.split("-").reverse().join("/");
 
   document.getElementById("confirmacao").innerHTML = `
@@ -126,33 +89,59 @@ function preencherConfirmacao() {
     <li><span>Total</span><strong>${dinheiro(servico.preco)}</strong></li>`;
 }
 
-document.getElementById("btn-continuar").addEventListener("click", () => {
+document.getElementById("btn-continuar").addEventListener("click", async () => {
+  const botao = document.getElementById("btn-continuar");
+
   if (etapa === 2) {
     const erro = document.getElementById("erro");
+    const data = document.getElementById("data").value;
     const hora = document.getElementById("hora").value;
 
-    if (!document.getElementById("data").value || !hora) {
+    if (!data || !hora) {
       erro.textContent = "Escolha o dia e o horário.";
       erro.classList.remove("escondido");
       return;
     }
     erro.classList.add("escondido");
 
-    // horário lotado (ou fora do expediente)? mostra alternativas e não avança
-    if (boxLivre(paraMinutos(hora), servico.duracaoMin) === null) {
-      mostrarSugestoes(paraMinutos(hora));
+    try {
+      const disp = await verificarHorario(data, hora, servico.id);
+      if (!disp.disponivel) {
+        mostrarSugestoes(disp.sugestoes);
+        return;
+      }
+    } catch (e) {
+      erro.textContent = e.message + " A API está ligada?";
+      erro.classList.remove("escondido");
       return;
     }
 
     document.getElementById("sugestoes").classList.add("escondido");
     preencherConfirmacao();
   }
+
   if (etapa === 3) {
-    // aqui, depois, vai o fetch para a API
-    alert("Agendamento confirmado!");
-    window.location.href = "agendamentos.html";
+    const veiculoId = Number(document.getElementById("veiculo").value);
+    botao.disabled = true; // evita clique duplo
+    try {
+      await criarAgendamento({
+        veiculoId,
+        servicoId: servico.id,
+        data: document.getElementById("data").value,
+        hora: document.getElementById("hora").value,
+      });
+      window.location.href = "agendamentos.html";
+    } catch (e) {
+      botao.disabled = false;
+      alert(e.message);
+      if (e.sugestoes && e.sugestoes.length) {
+        mostrarEtapa(2);
+        mostrarSugestoes(e.sugestoes);
+      }
+    }
     return;
   }
+
   mostrarEtapa(etapa + 1);
 });
 
@@ -170,8 +159,17 @@ document.getElementById("btn-voltar").addEventListener("click", () => {
 
 // ---------- inicialização ----------
 async function iniciar() {
-  document.getElementById("veiculo").innerHTML = veiculos.map((v) => `<option>${v}</option>`).join("");
   document.getElementById("data").min = new Date().toLocaleDateString("sv-SE");
+
+  // veículos vindos da API (o value é o id)
+  try {
+    const lista = await buscarVeiculos();
+    document.getElementById("veiculo").innerHTML = lista
+      .map((v) => `<option value="${v.id}">${v.marca} ${v.modelo} • ${v.placa}</option>`)
+      .join("");
+  } catch (e) {
+    document.getElementById("veiculo").innerHTML = "<option>Erro ao carregar veículos</option>";
+  }
 
   try {
     servicos = await buscarServicos();
