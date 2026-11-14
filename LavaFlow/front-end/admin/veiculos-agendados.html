@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veículos agendados | LavaFlow</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/paginas.css">
+</head>
+<body class="app" data-area="admin">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="conteudo">
+    <header class="cabecalho-pagina">
+      <div>
+        <h1>Veículos agendados</h1>
+        <p class="texto-suave">Lista consolidada de veículos e clientes esperados no dia.</p>
+      </div>
+      <div class="barra-data">
+        <input type="date" id="dia">
+      </div>
+    </header>
+
+    <div class="cartao sem-padding">
+      <table class="tabela">
+        <thead><tr><th>Horário</th><th>Veículo</th><th>Serviço</th><th>Status</th></tr></thead>
+        <tbody id="tabela"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/veiculos-agendados.js"></script>
+</body>
+</html>

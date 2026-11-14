@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conta | LavaFlow</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body class="tela-login">
+
+  <section class="login-form">
+    <a href="index.html" class="logo">Lava<span>Flow</span></a>
+
+    <div class="login-caixa">
+      <p class="rotulo">Área do cliente</p>
+      <h1>Crie sua conta</h1>
+      <p class="texto-suave">Leva menos de um minuto para começar.</p>
+
+      <form id="form-cadastro">
+        <div class="campo"><label for="nome">Nome completo</label><input type="text" id="nome" placeholder="Seu nome" required></div>
+        <div class="campo"><label for="email">E-mail</label><input type="email" id="email" placeholder="voce@email.com" required></div>
+        <div class="campo"><label for="senha">Senha</label><input type="password" id="senha" minlength="8" required></div>
+        <div class="campo"><label for="telefone">Telefone</label><input type="tel" id="telefone" placeholder="(11) 99999-9999"></div>
+        <button type="submit" class="botao botao-total">Criar conta</button>
+      </form>
+
+      <p class="login-rodape">Já possui uma conta? <a href="login.html">Entrar</a></p>
+    </div>
+  </section>
+
+  <aside class="login-destaque">
+    <p class="rotulo">Agendamento inteligente</p>
+    <blockquote>“Agora eu sei exatamente quando deixar e buscar meu carro. Sem fila, sem perder tempo.”</blockquote>
+    <div class="login-autor"><strong>Marina Alves</strong><span>Cliente LavaFlow</span></div>
+  </aside>
+
+  <script>
+  // se veio de um cartão da landing (cadastro.html?servico=2), guarda o id
+  const servico = new URLSearchParams(location.search).get("servico");
+
+  document.getElementById("form-cadastro").addEventListener("submit", (e) => {
+    e.preventDefault();
+    // depois do cadastro, vai direto para o agendamento já com o serviço escolhido
+    window.location.href = servico
+      ? `cliente/agendar.html?servico=${servico}`
+      : "cliente/inicio.html";
+  });
+</script>
+</body>
+</html>

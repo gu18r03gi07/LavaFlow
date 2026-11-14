@@ -1,0 +1,46 @@
+.app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+.sidebar {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; gap: 24px;
+  padding: 24px 16px;
+  background: var(--branco); border-right: 1px solid var(--borda);
+}
+
+.perfil {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; background: var(--fundo); border-radius: var(--raio);
+}
+.perfil small { display: block; font-size: 11px; color: var(--texto-suave); }
+.perfil strong { display: block; font-size: 14px; }
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: var(--azul); color: #fff; font-size: 13px; font-weight: 700;
+}
+
+.menu { display: flex; flex-direction: column; gap: 4px; }
+.menu a {
+  padding: 10px 12px; border-radius: var(--raio-pequeno);
+  font-size: 14px; font-weight: 500; color: #475569;
+}
+.menu a:hover { background: var(--fundo); }
+.menu a.ativo { background: var(--azul); color: #fff; }
+.menu-rodape { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--borda); }
+
+.conteudo { padding: 32px 40px; max-width: 1100px; width: 100%; }
+
+.cabecalho-pagina {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; margin-bottom: 24px;
+}
+.cabecalho-pagina h1 { font-size: 28px; }
+
+.grade-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grade-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; }
+  .grade-3, .grade-4 { grid-template-columns: 1fr; }
+}

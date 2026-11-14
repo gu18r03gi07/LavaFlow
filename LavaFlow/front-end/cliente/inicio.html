@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Início | LavaFlow</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/paginas.css">
+</head>
+<body class="app" data-area="cliente" data-pagina="inicio">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="conteudo">
+    <header class="cabecalho-pagina">
+      <div>
+        <p class="rotulo" id="data-hoje"></p>
+        <h1>Olá, Marina!</h1>
+        <p class="texto-suave">Seu carro merece cuidado. O seu tempo também.</p>
+      </div>
+      <a href="agendar.html" class="botao">+ Novo agendamento</a>
+    </header>
+
+    <section class="painel-topo">
+      <article class="proximo">
+        <p class="rotulo">Próximo agendamento</p>
+        <h2>Lavagem Completa</h2>
+        <p class="suave">Volkswagen T-Cross • ABC-1D23</p>
+        <div class="proximo-dados">
+          <div><small>Data</small><strong>Hoje, 16 mai</strong></div>
+          <div><small>Entrada</small><strong>14:00</strong></div>
+          <div><small>Previsão</small><strong>15:30</strong></div>
+        </div>
+        <a href="agendamentos.html" class="botao">Ver detalhes</a>
+      </article>
+
+      <article class="cartao resumo-conta">
+        <h2>Resumo da sua conta</h2>
+        <ul>
+          <li><strong>2</strong><span class="texto-suave">Veículos cadastrados</span></li>
+          <li><strong>8</strong><span class="texto-suave">Lavagens realizadas</span></li>
+        </ul>
+      </article>
+    </section>
+
+    <section>
+  <h2>Escolha seu cuidado</h2>
+  <p class="texto-suave secao-sub">Serviços mais procurados</p>
+
+  <div class="grade-3">
+    <a href="agendar.html?servico=1" class="cartao cartao-servico">
+      <h3>Lavagem Essencial</h3>
+      <p class="texto-suave">Lavagem externa, rodas, pneus e secagem manual.</p>
+      <div class="rodape"><span class="preco">R$ 45,00</span><span class="texto-suave">60 min</span></div>
+    </a>
+    <a href="agendar.html?servico=2" class="cartao cartao-servico">
+      <span class="destaque-tag">Mais escolhido</span>
+      <h3>Lavagem Completa</h3>
+      <p class="texto-suave">Limpeza externa e interna, aspiração e acabamento.</p>
+      <div class="rodape"><span class="preco">R$ 79,90</span><span class="texto-suave">90 min</span></div>
+    </a>
+    <a href="agendar.html?servico=3" class="cartao cartao-servico">
+      <h3>Detalhamento Premium</h3>
+      <p class="texto-suave">Higienização profunda, cera protetora e revitalização.</p>
+      <div class="rodape"><span class="preco">R$ 149,90</span><span class="texto-suave">180 min</span></div>
+    </a>
+  </div>
+    </section>
+  </main>
+
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/utils.js"></script>
+<script>
+  document.getElementById("data-hoje").textContent = dataExtenso();
+</script>
+</body>
+</html>
