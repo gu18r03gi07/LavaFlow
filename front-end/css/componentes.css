@@ -1,0 +1,63 @@
+/* logo */
+.logo { font-weight: 700; font-size: 20px; }
+.logo span { color: var(--azul); }
+
+/* botões */
+.botao {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 18px; border: 1px solid transparent;
+  border-radius: var(--raio-pequeno);
+  background: var(--azul); color: #fff;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background .15s;
+}
+.botao:hover { background: var(--azul-escuro); }
+.botao-claro { background: var(--branco); color: var(--texto); border-color: var(--borda); }
+.botao-claro:hover { background: var(--fundo); }
+.botao-perigo { background: var(--branco); color: var(--vermelho); border-color: #fecaca; }
+.botao-perigo:hover { background: #fef2f2; }
+.botao-total { width: 100%; }
+
+/* cartão */
+.cartao {
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 24px;
+}
+
+/* formulário */
+.campo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.campo label { font-size: 13px; font-weight: 600; }
+.campo input, .campo select {
+  padding: 12px; background: var(--branco);
+  border: 1px solid var(--borda); border-radius: var(--raio);
+}
+.campo input:focus, .campo select:focus { outline: 2px solid var(--azul); outline-offset: 1px; }
+
+/* etiquetas de status */
+.etiqueta {
+  display: inline-block; padding: 2px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  background: var(--azul-claro); color: var(--azul);
+}
+.etiqueta-verde { background: #ecfdf5; color: #047857; }
+.etiqueta-roxa { background: #f5f3ff; color: #6d28d9; }
+.etiqueta-amarela { background: #fffbeb; color: #b45309; }
+.etiqueta-vermelha { background: #fef2f2; color: #b91c1c; }
+
+/* textos */
+.rotulo {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--azul);
+}
+.texto-suave { color: var(--texto-suave); font-size: 14px; }
+
+/* tabela */
+.tabela { width: 100%; border-collapse: collapse; }
+.tabela th {
+  text-align: left; padding: 12px 16px; background: var(--fundo);
+  font-size: 12px; text-transform: uppercase; color: var(--texto-suave);
+}
+.tabela td { padding: 14px 16px; border-top: 1px solid var(--borda); font-size: 14px; }
+.tabela small { display: block; color: var(--texto-suave); font-size: 12px; }

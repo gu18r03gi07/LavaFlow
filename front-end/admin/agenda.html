@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda | LavaFlow</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/paginas.css">
+</head>
+<body class="app" data-area="admin">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="conteudo">
+    <header class="cabecalho-pagina">
+      <div>
+        <h1>Agenda</h1>
+        <p class="texto-suave" id="subtitulo-agenda"></p>
+      </div>
+      <div class="barra-data">
+        <button class="botao botao-claro" id="dia-anterior">←</button>
+        <input type="date" id="dia">
+        <button class="botao botao-claro" id="dia-seguinte">→</button>
+        <button class="botao botao-claro" id="dia-hoje">Hoje</button>
+      </div>
+    </header>
+
+    <div class="grade-3" id="grade-boxes"></div>
+  </main>
+
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/agenda.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar | LavaFlow</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+  <link rel="stylesheet" href="css/paginas.css">
+</head>
+<body class="tela-login">
+
+  <section class="login-form">
+    <a href="index.html" class="logo">Lava<span>Flow</span></a>
+
+    <div class="login-caixa">
+      <p class="rotulo">Área do cliente</p>
+      <h1>Bem-vindo de volta</h1>
+      <p class="texto-suave">Entre para gerenciar seus agendamentos.</p>
+
+      <form id="form-login">
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="voce@email.com" required>
+        </div>
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" required>
+        </div>
+        <button type="submit" class="botao botao-total">Entrar</button>
+      </form>
+
+      <p class="login-rodape">Ainda não possui uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+      <a href="cliente/inicio.html" class="botao botao-claro botao-total">Acessar conta demonstrativa</a>
+    </div>
+  </section>
+
+  <aside class="login-destaque">
+    <p class="rotulo">Agendamento inteligente</p>
+    <blockquote>“Agora eu sei exatamente quando deixar e buscar meu carro. Sem fila, sem perder tempo.”</blockquote>
+    <div class="login-autor"><strong>Marina Alves</strong><span>Cliente LavaFlow</span></div>
+  </aside>
+
+  <script>
+    // por enquanto só simula o login; depois vai chamar a API
+    document.getElementById("form-login").addEventListener("submit", (e) => {
+      e.preventDefault();
+      window.location.href = "cliente/inicio.html";
+    });
+  </script>
+</body>
+</html>
