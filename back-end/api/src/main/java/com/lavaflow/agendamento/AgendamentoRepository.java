@@ -15,4 +15,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
 
     List<Agendamento> findByInicioGreaterThanEqualAndInicioLessThanOrderByInicio(
             LocalDateTime de, LocalDateTime ate);
+
+                boolean existsByVeiculoId(Long veiculoId);
 }
+

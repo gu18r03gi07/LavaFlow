@@ -106,3 +106,19 @@ async function ligarServico(id, ativo) {
   if (!r.ok) throw new Error("Não foi possível alterar o serviço.");
   return r.json();
 }
+
+async function atualizarVeiculo(id, dados) {
+  const r = await fetch(`${API}/veiculos/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados),
+  });
+  if (!r.ok) throw new Error("Não foi possível atualizar o veículo.");
+  return r.json();
+}
+
+async function excluirVeiculo(id) {
+  const r = await fetch(`${API}/veiculos/${id}`, { method: "DELETE" });
+  if (r.status === 409) throw new Error("Este veículo possui agendamentos e não pode ser excluído.");
+  if (!r.ok) throw new Error("Não foi possível excluir o veículo.");
+}
