@@ -55,7 +55,7 @@ public class AdminService {
     }
 
     public List<Linha> listarDia(LocalDate dia) {
-        // carrega as tabelas pequenas uma vez só (evita uma consulta por linha)
+
         Map<Long, Servico> sv = servicos.findAll().stream()
                 .collect(Collectors.toMap(Servico::getId, Function.identity()));
         Map<Long, Veiculo> ve = veiculos.findAll().stream()
@@ -89,7 +89,7 @@ public class AdminService {
                 .map(a -> sv.get(a.getServicoId()).getPreco())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // boxes ocupados neste instante (só faz sentido quando o dia é hoje)
+
         long emUso = validos.stream()
                 .filter(a -> !agora.isBefore(a.getInicio()) && agora.isBefore(a.getFim()))
                 .map(Agendamento::getBoxId).distinct().count();

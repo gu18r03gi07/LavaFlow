@@ -59,15 +59,14 @@ public class AgendamentoService {
                 dia.atStartOfDay(), dia.plusDays(1).atStartOfDay(), "CANCELADO");
     }
 
-    // Devolve o id de um box livre, ou null se não houver.
-    // Regra de sobreposição: novoInicio < fimExistente  E  novoFim > inicioExistente
+
     private Long boxLivre(LocalDateTime inicio, int duracaoMin,
                           List<Agendamento> doDia, List<Box> boxesAtivos) {
         LocalDate dia = inicio.toLocalDate();
         LocalDateTime fim = inicio.plusMinutes(duracaoMin);
 
-        if (inicio.isBefore(dia.atTime(ABRE)) || fim.isAfter(dia.atTime(FECHA))) return null; // fora do expediente
-        if (inicio.isBefore(LocalDateTime.now())) return null;                                // horário que já passou
+        if (inicio.isBefore(dia.atTime(ABRE)) || fim.isAfter(dia.atTime(FECHA))) return null; 
+        if (inicio.isBefore(LocalDateTime.now())) return null;                                
 
         for (Box box : boxesAtivos) {
             boolean conflito = doDia.stream().anyMatch(a ->
@@ -79,7 +78,7 @@ public class AgendamentoService {
         return null;
     }
 
-    // os 3 horários livres mais próximos do pedido
+
     private List<String> sugerir(LocalDateTime pedido, int duracaoMin,
                                  List<Agendamento> doDia, List<Box> boxesAtivos) {
         LocalDate dia = pedido.toLocalDate();
@@ -119,7 +118,7 @@ public class AgendamentoService {
                              LocalDate data, LocalTime hora) {
         Servico servico = buscarServico(servicoId);
 
-        // o veículo precisa existir E ser do usuário
+
         Veiculo veiculo = veiculos.findById(veiculoId)
                 .filter(v -> v.getUsuarioId().equals(usuarioId))
                 .orElseThrow(() -> erro(HttpStatus.NOT_FOUND, "Veículo não encontrado."));
@@ -141,7 +140,7 @@ public class AgendamentoService {
         try {
             return agendamentos.saveAndFlush(a);
         } catch (DataIntegrityViolationException e) {
-            // o banco barrou (regra anti-sobreposição): alguém reservou no mesmo instante
+
             throw erro(HttpStatus.CONFLICT, "Horário indisponível.");
         }
     }
@@ -164,6 +163,6 @@ public class AgendamentoService {
         Agendamento a = agendamentos.findById(id)
                 .filter(x -> x.getUsuarioId().equals(usuarioId))
                 .orElseThrow(() -> erro(HttpStatus.NOT_FOUND, "Agendamento não encontrado."));
-        a.setStatus("CANCELADO"); // não apagamos: o histórico fica
+        a.setStatus("CANCELADO");
     }
 }

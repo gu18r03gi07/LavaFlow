@@ -1,5 +1,3 @@
-// Monta a sidebar conforme o data-area do <body>: "cliente" ou "admin".
-// O item ativo vem do nome do arquivo na URL (ex.: agenda.html).
 const area = document.body.dataset.area;
 const arquivoAtual = location.pathname.split("/").pop().replace(".html", "");
 

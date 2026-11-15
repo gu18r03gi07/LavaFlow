@@ -14,7 +14,7 @@ public class Servico {
     private String nome;
     private String descricao;
     private BigDecimal preco;
-    private Integer duracaoMin;   // o Spring liga isto à coluna duracao_min sozinho
+    private Integer duracaoMin;  
     private Boolean ativo;
 
     public Long getId() { return id; }

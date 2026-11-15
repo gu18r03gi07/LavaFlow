@@ -14,8 +14,7 @@ function criarCartao(v) {
       <div><dt>Placa</dt><dd class="v-placa"></dd></div>
       <div><dt>Cor</dt><dd class="v-cor"></dd></div>
     </dl>`;
-  // textContent (e não innerHTML) para o que o usuário digitou:
-  // assim ninguém consegue injetar HTML/JS na página
+
   cartao.querySelector(".rotulo").textContent = v.marca;
   cartao.querySelector("h2").textContent = v.modelo;
   cartao.querySelector(".v-placa").textContent = v.placa;
@@ -27,7 +26,7 @@ function desenhar() {
   lista.innerHTML = "";
   veiculos.forEach((v) => lista.appendChild(criarCartao(v)));
 
-  // cartão tracejado no final
+
   const novo = document.createElement("button");
   novo.className = "cartao veiculo-novo";
   novo.innerHTML = `<strong>+ Adicionar outro veículo</strong>

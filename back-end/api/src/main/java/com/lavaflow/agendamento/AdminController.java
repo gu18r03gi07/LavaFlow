@@ -19,7 +19,7 @@ public class AdminController {
         this.service = service;
     }
 
-    // sem ?data= usa o dia de hoje
+
     @GetMapping("/agendamentos")
     public List<AdminService.Linha> listar(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {

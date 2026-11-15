@@ -3,7 +3,7 @@ const botoesFiltro = document.querySelectorAll(".filtro");
 let agendamentos = [];
 let filtroAtual = "todos";
 
-// o banco guarda AGENDADO/RECEBIDO/EM_LAVAGEM/CONCLUIDO/CANCELADO
+
 const rotulos = {
   AGENDADO: ["Agendado", "etiqueta"],
   RECEBIDO: ["Recebido", "etiqueta etiqueta-amarela"],
@@ -45,7 +45,7 @@ function criarCartao(a) {
   cartao.querySelector(".a-servico").textContent = a.servico;
   cartao.querySelector(".a-veiculo").textContent = `${a.veiculo} • ${a.placa}`;
 
-  // só dá para cancelar o que ainda está só agendado
+
   if (a.status === "AGENDADO") {
     const btn = document.createElement("button");
     btn.className = "botao botao-perigo";

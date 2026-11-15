@@ -29,7 +29,7 @@ async function buscarVeiculosDoUsuario() {
 async function verificarHorario(data, hora, servicoId) {
   const resposta = await fetch(`${API}/horarios?data=${data}&hora=${hora}&servicoId=${servicoId}`);
   if (!resposta.ok) throw new Error("Não foi possível verificar o horário.");
-  return resposta.json(); // { disponivel, sugestoes: ["12:00", ...] }
+  return resposta.json();
 }
 
 async function criarAgendamento(dados) {
@@ -58,7 +58,7 @@ async function cancelarAgendamento(id) {
   if (!resposta.ok) throw new Error("Não foi possível cancelar.");
 }
 
-// ---------- admin ----------
+
 async function buscarAdminAgendamentos(data) {
   const r = await fetch(`${API}/admin/agendamentos?data=${data}`);
   if (!r.ok) throw new Error("Não foi possível carregar os agendamentos.");
@@ -86,7 +86,7 @@ async function buscarTodosServicos() {
   return r.json();
 }
 
-// sem id cria (POST); com id edita (PUT)
+
 async function salvarServico(dados, id) {
   const r = await fetch(`${API}/servicos${id ? "/" + id : ""}`, {
     method: id ? "PUT" : "POST",

@@ -20,7 +20,7 @@ public class ServicoController {
         this.repositorio = repositorio;
     }
 
-    // clientes veem só os ativos; o admin pede ?todos=true
+
     @GetMapping
     public List<Servico> listar(@RequestParam(defaultValue = "false") boolean todos) {
         return todos ? repositorio.findAll() : repositorio.findByAtivoTrue();

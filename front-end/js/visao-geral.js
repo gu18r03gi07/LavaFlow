@@ -1,4 +1,4 @@
-const hoje = new Date().toLocaleDateString("sv-SE"); // AAAA-MM-DD no fuso local
+const hoje = new Date().toLocaleDateString("sv-SE");
 const tabela = document.getElementById("tabela-hoje");
 
 function desenharResumo(r) {
@@ -42,10 +42,10 @@ function desenharTabela(linhas) {
     select.addEventListener("change", async () => {
       try {
         await mudarStatus(l.id, select.value);
-        desenharResumo(await buscarAdminResumo(hoje)); // atualiza os números
+        desenharResumo(await buscarAdminResumo(hoje));
       } catch (e) {
         alert(e.message);
-        carregar(); // volta ao que está no banco
+        carregar();
       }
     });
     tr.lastElementChild.appendChild(select);

@@ -10,7 +10,7 @@ public class Veiculo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long usuarioId;   // liga à coluna usuario_id
+    private Long usuarioId; 
     private String marca;
     private String modelo;
     private String placa;

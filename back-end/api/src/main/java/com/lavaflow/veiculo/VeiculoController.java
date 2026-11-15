@@ -9,10 +9,10 @@ import java.util.List;
 @RequestMapping("/api/veiculos")
 public class VeiculoController {
 
-    // TEMPORÁRIO: no passo 20 isto vem do usuário logado
+    
     private static final Long USUARIO_DEMO = 1L;
 
-    // os dados que chegam do front
+  
     public record NovoVeiculo(String marca, String modelo, String placa, String cor) {}
 
     private final VeiculoRepository repositorio;
