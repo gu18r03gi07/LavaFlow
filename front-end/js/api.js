@@ -29,7 +29,7 @@ async function buscarVeiculosDoUsuario() {
 async function verificarHorario(data, hora, servicoId) {
   const resposta = await fetch(`${API}/horarios?data=${data}&hora=${hora}&servicoId=${servicoId}`);
   if (!resposta.ok) throw new Error("Não foi possível verificar o horário.");
-  return resposta.json(); // { disponivel, sugestoes: ["12:00", ...] }
+  return resposta.json();
 }
 
 async function criarAgendamento(dados) {
@@ -58,7 +58,7 @@ async function cancelarAgendamento(id) {
   if (!resposta.ok) throw new Error("Não foi possível cancelar.");
 }
 
-// ---------- admin ----------
+
 async function buscarAdminAgendamentos(data) {
   const r = await fetch(`${API}/admin/agendamentos?data=${data}`);
   if (!r.ok) throw new Error("Não foi possível carregar os agendamentos.");
@@ -86,7 +86,7 @@ async function buscarTodosServicos() {
   return r.json();
 }
 
-// sem id cria (POST); com id edita (PUT)
+
 async function salvarServico(dados, id) {
   const r = await fetch(`${API}/servicos${id ? "/" + id : ""}`, {
     method: id ? "PUT" : "POST",
@@ -105,4 +105,20 @@ async function ligarServico(id, ativo) {
   });
   if (!r.ok) throw new Error("Não foi possível alterar o serviço.");
   return r.json();
+}
+
+async function atualizarVeiculo(id, dados) {
+  const r = await fetch(`${API}/veiculos/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados),
+  });
+  if (!r.ok) throw new Error("Não foi possível atualizar o veículo.");
+  return r.json();
+}
+
+async function excluirVeiculo(id) {
+  const r = await fetch(`${API}/veiculos/${id}`, { method: "DELETE" });
+  if (r.status === 409) throw new Error("Este veículo possui agendamentos e não pode ser excluído.");
+  if (!r.ok) throw new Error("Não foi possível excluir o veículo.");
 }

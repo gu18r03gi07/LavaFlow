@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class AgendamentoController {
 
-    // TEMPORÁRIO: no passo 20 isto vem do usuário logado
+
     private static final Long USUARIO_DEMO = 1L;
 
     public record NovoAgendamento(Long veiculoId, Long servicoId, LocalDate data, LocalTime hora) {}
@@ -25,7 +25,7 @@ public class AgendamentoController {
         this.service = service;
     }
 
-    // GET /api/horarios?data=2026-11-10&hora=14:00&servicoId=2
+  
     @GetMapping("/horarios")
     public AgendamentoService.Disponibilidade horarios(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
@@ -41,7 +41,7 @@ public class AgendamentoController {
 
     @PostMapping("/agendamentos")
     public ResponseEntity<?> criar(@RequestBody NovoAgendamento dados) {
-        // checa antes, para devolver as sugestões junto com o erro
+   
         var disp = service.verificar(dados.servicoId(), dados.data(), dados.hora());
         if (!disp.disponivel()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)

@@ -19,7 +19,7 @@ async function carregar() {
       `${dataExtenso(new Date(dia + "T00:00:00"))} • ${resumo.agendamentos} agendamentos`;
 
     grade.innerHTML = "";
-    // um cartão por box (o banco tem Box 01 ... Box 06)
+  
     for (let i = 1; i <= resumo.boxesTotal; i++) {
       const nome = `Box 0${i}`;
       const cartao = document.createElement("section");

@@ -37,12 +37,12 @@
   </aside>
 
   <script>
-  // se veio de um cartão da landing (cadastro.html?servico=2), guarda o id
+
   const servico = new URLSearchParams(location.search).get("servico");
 
   document.getElementById("form-cadastro").addEventListener("submit", (e) => {
     e.preventDefault();
-    // depois do cadastro, vai direto para o agendamento já com o serviço escolhido
+  
     window.location.href = servico
       ? `cliente/agendar.html?servico=${servico}`
       : "cliente/inicio.html";

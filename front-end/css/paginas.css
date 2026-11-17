@@ -230,3 +230,6 @@ a.cartao-servico:hover { border-color: var(--azul); transform: translateY(-2px);
   border: 1px solid var(--borda); border-radius: var(--raio-pequeno);
 }
 .vazio { padding: 24px 16px; color: var(--texto-suave); font-size: 14px; }
+
+
+.cartao-acoes { display: flex; gap: 8px; margin-top: 16px; }

@@ -1,5 +1,5 @@
 let servicos = [];
-let editandoId = null; // null = criando; número = editando aquele serviço
+let editandoId = null; 
 
 const lista = document.getElementById("lista-servicos-admin");
 const modal = document.getElementById("modal-servico");

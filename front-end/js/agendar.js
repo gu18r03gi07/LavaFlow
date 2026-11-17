@@ -27,7 +27,7 @@ function mostrarSugestoes(horas) {
   caixa.classList.remove("escondido");
 }
 
-// ---------- telas ----------
+
 function desenharServicos() {
   const lista = document.getElementById("lista-servicos");
   lista.innerHTML = "";
@@ -75,7 +75,7 @@ function mostrarEtapa(n) {
 function preencherConfirmacao() {
   const data = document.getElementById("data").value;
   const hora = document.getElementById("hora").value;
-  // o value do select é o id; o nome do veículo está no texto da opção
+
   const select = document.getElementById("veiculo");
   const veiculo = select.options[select.selectedIndex].text;
   const dataBr = data.split("-").reverse().join("/");
@@ -122,7 +122,7 @@ document.getElementById("btn-continuar").addEventListener("click", async () => {
 
   if (etapa === 3) {
     const veiculoId = Number(document.getElementById("veiculo").value);
-    botao.disabled = true; // evita clique duplo
+    botao.disabled = true;
     try {
       await criarAgendamento({
         veiculoId,
@@ -150,18 +150,18 @@ document.getElementById("btn-voltar").addEventListener("click", () => {
   else mostrarEtapa(etapa - 1);
 });
 
-// ao mexer no dia/hora: esconde sugestões antigas e atualiza o resumo
+
 ["hora", "data"].forEach((id) =>
   document.getElementById(id).addEventListener("input", () => {
     document.getElementById("sugestoes").classList.add("escondido");
     atualizarResumo();
   }));
 
-// ---------- inicialização ----------
+
 async function iniciar() {
   document.getElementById("data").min = new Date().toLocaleDateString("sv-SE");
 
-  // veículos vindos da API (o value é o id)
+
   try {
     const lista = await buscarVeiculos();
     document.getElementById("veiculo").innerHTML = lista
@@ -173,7 +173,7 @@ async function iniciar() {
 
   try {
     servicos = await buscarServicos();
-    // se veio do Início ou da landing (agendar.html?servico=3), já deixa esse selecionado
+
     const idDaUrl = Number(new URLSearchParams(location.search).get("servico"));
     servico = servicos.find((s) => s.id === idDaUrl) || servicos[1] || servicos[0];
     desenharServicos();
