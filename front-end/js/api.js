@@ -1,4 +1,4 @@
-const API = "http://localhost:8080/api";
+const API = "https://congenial-guacamole-v6wv4q5p76vwfpp9p-8080.app.github.dev";
 
 async function buscarServicos() {
   const resposta = await fetch(`${API}/servicos`);
